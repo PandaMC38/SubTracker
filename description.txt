@@ -1,0 +1,14 @@
+1. Vie Quotidienne & Budget : "Le Tracker d'Abonnements"
+Nous avons tous trop d'abonnements (Netflix, Spotify, logiciels, salle de sport). Une application simple pour les visualiser.
+
+Le concept : L'utilisateur entre ses abonnements, le coût et la date de renouvellement. L'app calcule le coût mensuel/annuel total et envoie une notification 2 jours avant un renouvellement pour permettre d'annuler si besoin.
+
+Pourquoi c'est utile : Ça touche au portefeuille, donc tout le monde est concerné.
+
+Le petit "plus" technique :
+
+Pas de backend complexe : utilisez le Local Storage ou SQLite (données privées stockées sur l'appareil).
+
+Visualisation de données (un beau graphique camembert des dépenses).
+
+Stack suggérée : Flutter ou React Native (Mobile), ou React/Vue (Web PWA).

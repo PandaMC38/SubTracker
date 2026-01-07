@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gérez vos abonnements et visualisez vos dépenses facilement.">
+    <meta name="theme-color" content="#0f0f13">
+    <title>Le Tracker d'Abonnements</title>
+
+    <!-- Google Fonts: Outfit for a premium tech look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components.css">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body class="dark-theme">
+    <div id="app">
+        <header class="app-header glass-panel">
+            <div class="header-content">
+                <h1>SubTracker</h1>
+                <button id="add-sub-btn" class="btn btn-primary" aria-label="Ajouter un abonnement">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>Nouveau</span>
+                </button>
+                <button id="notify-test-btn" class="btn btn-icon" aria-label="Tester Notifications"
+                    style="margin-left: 10px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                </button>
+                </button>
+                <button id="theme-toggle-btn" class="btn btn-icon" aria-label="Changer de thème"
+                    style="margin-left: 10px;">
+                    <span id="theme-icon">🌓</span>
+                </button>
+                <button id="settings-btn" class="btn btn-icon" aria-label="Paramètres" style="margin-left: 10px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Section Visualisation (Top on mobile, Left on Desktop) -->
+            <section class="visuals-section">
+                <!-- Total Card -->
+                <div class="total-card glass-panel">
+                    <h2>Dépenses Mensuelles</h2>
+                    <div class="amount-display">
+                        <span class="currency">€</span>
+                        <span id="total-monthly-amount">0.00</span>
+                    </div>
+                    <p class="sub-text">Soit <strong id="total-yearly-amount">0.00 €</strong> / an</p>
+                </div>
+
+                <!-- Chart Card -->
+                <div class="chart-container glass-panel">
+                    <canvas id="expenses-chart"></canvas>
+                </div>
+            </section>
+
+            <!-- Section Liste (Bottom on mobile, Right on Desktop) -->
+            <section class="list-section">
+                <div class="section-header">
+                    <h2>Vos Abonnements</h2>
+                    <div class="filter-controls" style="display: flex; gap: 10px;">
+                        <select id="sort-select" class="btn-secondary" style="padding: 5px; border-radius: 8px;">
+                            <option value="date">📅 Date</option>
+                            <option value="price_desc">💰 Prix (Haut)</option>
+                            <option value="price_asc">💰 Prix (Bas)</option>
+                            <option value="name">AZ Nom</option>
+                        </select>
+                        <select id="filter-cycle" class="btn-secondary" style="padding: 5px; border-radius: 8px;">
+                            <option value="all">Tout</option>
+                            <option value="monthly">Mensuel</option>
+                            <option value="yearly">Annuel</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="subscription-list" class="subscription-list">
+                    <!-- Cards will be injected here via JS -->
+                    <div class="empty-state">
+                        <p>Aucun abonnement pour le moment.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modale d'ajout/édition -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal glass-panel">
+            <div class="modal-header">
+                <h2 id="modal-title">Ajouter un abonnement</h2>
+                <button id="close-modal-btn" class="btn-icon" aria-label="Fermer">×</button>
+            </div>
+            <form id="subscription-form">
+                <input type="hidden" id="sub-id">
+
+                <div class="form-group">
+                    <label for="sub-name">Nom du service</label>
+                    <input type="text" id="sub-name" placeholder="ex: Netflix, Salle de sport..." required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sub-price">Prix</label>
+                        <div class="price-input-group" style="display: flex; gap: 5px;">
+                            <input type="number" id="sub-price" step="0.01" placeholder="0.00" required
+                                style="flex: 2;">
+                            <select id="sub-currency" style="flex: 1;">
+                                <option value="EUR">€</option>
+                                <option value="USD">$</option>
+                                <option value="GBP">£</option>
+                                <option value="CHF">CHF</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sub-cycle">Cycle</label>
+                        <select id="sub-cycle">
+                            <option value="monthly">Mensuel</option>
+                            <option value="yearly">Annuel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sub-date">Date de renouvellement</label>
+                    <input type="date" id="sub-date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sub-category">Catégorie</label>
+                    <select id="sub-category">
+                        <option value="Divertissement">Divertissement</option>
+                        <option value="Logiciel">Logiciel / App</option>
+                        <option value="Maison">Maison / Utilitaire</option>
+                        <option value="Santé">Santé / Sport</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" id="delete-btn" class="btn btn-danger hidden">Supprimer</button>
+                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modale Paramètres & Sauvegarde -->
+    <div id="settings-modal-overlay" class="modal-overlay hidden">
+        <div class="modal glass-panel">
+            <div class="modal-header">
+                <h2>Paramètres</h2>
+                <button id="close-settings-btn" class="btn-icon" aria-label="Fermer">×</button>
+            </div>
+            <div class="settings-content">
+                <div class="setting-group">
+                    <h3>Données</h3>
+                    <p class="sub-text">Sauvegardez vos abonnements dans un fichier ou restaurez-les.</p>
+                    <div class="form-actions">
+                        <button id="export-btn" class="btn btn-secondary">
+                            📥 Sauvegarder (Export)
+                        </button>
+                        <button id="import-trigger-btn" class="btn btn-secondary">
+                            📤 Restaurer (Import)
+                        </button>
+                        <input type="file" id="import-file" accept=".json" class="hidden">
+                    </div>
+                </div>
+
+                <div class="setting-group"
+                    style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-glass);">
+                    <h3>Catégories</h3>
+                    <p class="sub-text">Gérez vos catégories personnalisées.</p>
+
+                    <div id="categories-list" style="margin: 10px 0; max-height: 150px; overflow-y: auto;">
+                        <!-- Injected via JS -->
+                    </div>
+
+                    <div class="category-input-group" style="display: flex; gap: 5px;">
+                        <input type="text" id="new-cat-name" placeholder="Nouvelle catégorie" style="flex: 2;">
+                        <input type="color" id="new-cat-color" value="#a29bfe" style="width: 40px; padding: 2px;">
+                        <button id="add-cat-btn" class="btn btn-primary" style="padding: 0.5rem;">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

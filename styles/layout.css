@@ -1,0 +1,104 @@
+/* Layout Grid */
+.app-header {
+    padding: var(--space-s) var(--space-m);
+    margin: var(--space-s);
+    display: flex;
+    align-items: center;
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-grid {
+    flex: 1;
+    display: grid;
+    gap: var(--space-m);
+    padding: 0 var(--space-m) var(--space-m) var(--space-m);
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Mobile First: Stacked */
+.dashboard-grid {
+    grid-template-columns: 1fr;
+}
+
+/* Visuals Section */
+.visuals-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+}
+
+.total-card {
+    padding: var(--space-m);
+    text-align: center;
+}
+
+.amount-display {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: var(--space-xs) 0;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.chart-container {
+    padding: var(--space-s);
+    position: relative;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* List Section */
+.list-section {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* For scrolling list */
+    min-height: 0;
+    /* Important for flex child scroll */
+}
+
+.section-header {
+    margin-bottom: var(--space-s);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subscription-list {
+    overflow-y: auto;
+    padding-bottom: 80px;
+    /* Space for FAB or bottom padding */
+}
+
+/* Desktop Responsiveness */
+@media (min-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 350px 1fr;
+        grid-template-areas:
+            "visuals list";
+        overflow: hidden;
+    }
+
+    .visuals-section {
+        grid-area: visuals;
+    }
+
+    .list-section {
+        grid-area: list;
+    }
+
+    .subscription-list {
+        padding-right: var(--space-s);
+    }
+}
