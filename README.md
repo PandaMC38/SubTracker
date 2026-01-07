@@ -1,3 +1,74 @@
+# 💎 SubTracker - The Ultimate Subscription Manager
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Version](https://img.shields.io/badge/version-1.0.0-purple.svg) ![Status](https://img.shields.io/badge/status-Stable-green.svg)
+
+> **Never lose a single euro again.**
+> An elegant, fluid, and powerful interface to master your recurring expenses.
+
+---
+
+## ✨ Why SubTracker?
+
+Forget sad Excel spreadsheets and scattered notes. **SubTracker** is a **Progressive Web App (PWA)** passionately designed to offer a **Premium** experience:
+
+*   🎨 **Glassmorphism Design**: A modern, dark, and sleek aesthetic.
+*   ⚡ **Blazing Fast**: No loading times, everything is instant.
+*   🔒 **100% Private**: Your data stays on your device. Nothing is sent to the cloud.
+*   📱 **Installable**: Works like a native app on mobile and PC.
+
+## 🚀 Key "Premium" Features
+
+*   **📊 Visual Dashboard**: Interactive donut chart to understand your budget at a glance.
+*   **🔔 Smart Notifications**: Receive reminders 2 days before each payment. Never be surprised again!
+*   **🌍 Multi-Currency**: Manage your subscriptions in €, $, £, or CHF. Automatic conversion.
+*   **🏷️ Custom Categories**: Create your own categories with your favorite colors.
+*   **💾 Backup & Restore**: Export your data in one click. Your data is safe.
+*   **🌗 Light / Dark Mode**: Choose the ambiance that suits you best.
+
+---
+
+## 🛠️ Installation
+
+It's a **Native Web Application**, so it's extremely simple. No servers, no complex databases.
+
+### To use it immediately:
+1.  Download this project (or clone this repository).
+2.  Open the `index.html` file in your favorite browser (Chrome, Edge, Firefox).
+3.  🎉 **That's it!**
+
+### To install it as an App (PWA):
+1.  Open `index.html` in Chrome or Edge.
+2.  Click the "Install" icon in the address bar (or "Add to Home Screen" on mobile).
+3.  The application is now installed on your desktop/phone and works even **offline**!
+
+---
+
+## 🎮 How to use it?
+
+1.  **Add**: Click the "New" button to add a subscription (Netflix, Spotify, Rent...).
+2.  **Visualize**: The circle shows you the distribution. The monthly and annual total is displayed at the top.
+3.  **Configure**: Click the gear icon (⚙️) to:
+    *   Backup your data.
+    *   Manage your custom categories.
+4.  **Change Theme**: Click the moon/sun (🌓) to rest your eyes.
+
+---
+
+## 🙋‍♂️ Need an extra option?
+
+This project is alive! If you have a **genius idea** or need a specific feature to perfect your management:
+
+> **Don't hesitate to ask me!** 🚀
+
+Open an "Issue" or contact me directly. I'm always listening to make SubTracker even more amazing.
+
+---
+
+*Developed with ❤️ and pure Javascript.*
+
+---
+---
+
 # 💎 SubTracker - Le Gestionnaire d'Abonnements Ultime
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Version](https://img.shields.io/badge/version-1.0.0-purple.svg) ![Status](https://img.shields.io/badge/status-Stable-green.svg)
